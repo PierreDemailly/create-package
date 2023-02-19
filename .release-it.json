@@ -10,5 +10,6 @@
             "filename": "CHANGELOG.md"
         }
     },
-    "addUnreleased": true
+    "addUnreleased": true,
+    "strictLatest": false
 }
