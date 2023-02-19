@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { writeFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { exec } from 'node:child_process'
