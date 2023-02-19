@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.0.4] - 2023-02-19
+
 ### Fixed
 
 - Added shebang
