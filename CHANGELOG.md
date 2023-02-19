@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.0.2] - 2023-02-19
+
 ### Fixed
 
 - Uses .mjs extension to run esm outside a module project
