@@ -42,7 +42,7 @@ export class Feature {
     for (const file of this.files) {
       if (file.copy) {
         const content = readFileSync(path.resolve(__dirname, `./assets/${file.copy}`))
-        writeFileSync(path.join(process.cwd(), dir, file.copy), content)
+        writeFileSync(path.join(process.cwd(), dir, file.path ?? file.copy), content)
 
         return
       }

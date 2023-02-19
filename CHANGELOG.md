@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Fixed
+
+- Rename assets .gitignore as it make the file ignored
+- Handle path when copying files
+
 ## [0.0.2] - 2023-02-19
 
 ### Fixed
