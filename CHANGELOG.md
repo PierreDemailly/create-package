@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.0.3] - 2023-02-19
+
 ### Fixed
 
 - Rename assets .gitignore as it make the file ignored
