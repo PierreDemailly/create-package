@@ -10,7 +10,7 @@
     "pkg:ok": "npx pkg-ok"
   },
   "bin": {
-    "create-package": "./index.js"
+    "create-package": "./index.mjs"
   },
   "keywords": [
     "create",
@@ -35,7 +35,7 @@
     "vitest": "^0.28.5"
   },
   "files": [
-    "index.js",
+    "index.mjs",
     "src"
   ],
   "type": "module",
