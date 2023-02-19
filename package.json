@@ -1,0 +1,42 @@
+{
+  "name": "@pierred/create-package",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "vitest run",
+    "test:c8": "vitest run --coverage",
+    "lint": "standard --fix | snazzy",
+    "lint:ci": "standard | snazzy",
+    "pkg:ok": "npx pkg-ok"
+  },
+  "bin": {
+    "create-package": "./index.js"
+  },
+  "keywords": [
+    "create",
+    "package",
+    "init",
+    "lib"
+  ],
+  "author": "Pierre Demamilly <pierredemailly.pro@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@topcli/spinner": "^2.0.0",
+    "ansi-styles": "^6.2.1",
+    "prompts": "^2.4.2",
+    "spdx-license-list": "^6.6.0"
+  },
+  "devDependencies": {
+    "@release-it/keep-a-changelog": "^3.1.0",
+    "@vitest/coverage-c8": "^0.28.5",
+    "pkg-ok": "^3.0.0",
+    "snazzy": "^9.0.0",
+    "standard": "^17.0.0",
+    "vitest": "^0.28.5"
+  },
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "type": "module"
+}
