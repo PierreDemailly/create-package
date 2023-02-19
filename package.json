@@ -1,6 +1,5 @@
 {
   "name": "@pierred/create-package",
-  "version": "0.0.1",
   "description": "",
   "scripts": {
     "test": "vitest run",
