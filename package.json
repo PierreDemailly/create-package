@@ -32,7 +32,7 @@
     "pkg-ok": "^3.0.0",
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",
-    "vitest": "^0.28.5"
+    "vitest": "^0.29.1"
   },
   "files": [
     "index.mjs",
