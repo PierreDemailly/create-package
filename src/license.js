@@ -53,11 +53,11 @@ async function * showOtherLicenses () {
 
 export async function license () {
   const feature = new Feature()
-  const license = await showMostUsedLicenses().next()
-  // FIXME: the licenseText MAY includes <year> and <holders>. Replace with gitAuthor
+  const licenseInput = await showMostUsedLicenses().next()
+  // TODO: the licenseText MAY includes <year> and <holders>. Replace with gitAuthor
   feature.files.push({
     path: 'LICENSE',
-    content: license.value.licenseText
+    content: licenseInput.licenseText
   })
   feature.license = license.value.license
 
