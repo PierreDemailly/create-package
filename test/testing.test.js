@@ -15,14 +15,10 @@ function * mockPromptsValues () {
 
 const mockPromptsValues$ = mockPromptsValues()
 
-vi.mock('../src/prompts.js', () => {
+vi.mock('@topcli/prompts', () => {
   return {
-    prompts: async () => {
-      return mockPromptsValues$.next().value
-    },
-    choicesFrom: vi.fn((choices) => {
-      return choices.map(choice => ({ title: choice, value: choice }))
-    })
+    select: async () => mockPromptsValues$.next().value,
+    confirm: async () => mockPromptsValues$.next().value
   }
 })
 

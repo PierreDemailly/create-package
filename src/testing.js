@@ -1,22 +1,17 @@
-import { prompts, choicesFrom } from './prompts.js'
+import { confirm, select } from '@topcli/prompts'
+
 import { Feature } from './feature.js'
 
 export async function testing () {
   const feature = new Feature()
 
-  const { addTestLibrary } = await prompts({
-    name: 'addTestLibrary',
-    type: 'confirm',
-    message: 'Will you write unit tests?',
+  const addTestLibrary = await confirm('Will you write unit tests?', {
     initial: true
   })
 
   if (addTestLibrary) {
-    const { testRunner } = await prompts({
-      type: 'select',
-      name: 'testRunner',
-      message: 'Choose your test runner:',
-      choices: choicesFrom(['node:test', 'tap', 'vitest'])
+    const testRunner = await select('Choose your test runner', {
+      choices: ['node:test', 'tap', 'vitest']
       // TODO: required
     })
     feature.devDeps.push(...getRunnerDeps(testRunner).next().value)

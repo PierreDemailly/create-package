@@ -1,7 +1,7 @@
 import spdxLicenseList from 'spdx-license-list/full.js'
 import ansi from 'ansi-styles'
+import { select } from '@topcli/prompts'
 
-import { prompts } from './prompts.js'
 import { Feature } from './feature.js'
 
 export const kOtherLicenses = Symbol('OTHER_LICENSES')
@@ -19,19 +19,16 @@ const otherLicenses = []
 
 for (const [key, value] of Object.entries(spdxLicenseList)) {
   if (mostUsedLicenseKeys.includes(key)) {
-    mostUsedLicenses.push({ title: value.name, value: { ...value, license: key } })
+    mostUsedLicenses.push({ label: name, value: { ...value, license: key } })
   } else {
-    otherLicenses.push({ title: value.name, value: { ...value, license: key } })
+    otherLicenses.push({ label: name, value: { ...value, license: key } })
   }
 }
 
 async function * showMostUsedLicenses () {
-  const { license } = await prompts({
-    type: 'select',
-    name: 'license',
-    message: kPromptLisense,
-    choices: [...mostUsedLicenses, { title: `${ansi.yellow.open}See other licenses${ansi.yellow.close}`, value: kOtherLicenses }],
-    ignoreFormatChoices: [kOtherLicenses]
+  const license = await select(kPromptLisense, {
+    choices: [...mostUsedLicenses, { label: `${ansi.yellow.open}See other licenses${ansi.yellow.close}`, value: kOtherLicenses }],
+    ignoreChoices: [kOtherLicenses]
   })
 
   if (license === kOtherLicenses) {
@@ -42,12 +39,9 @@ async function * showMostUsedLicenses () {
 }
 
 async function * showOtherLicenses () {
-  const { license } = await prompts({
-    type: 'select',
-    name: 'license',
-    message: kPromptLisense,
-    choices: [{ title: `${ansi.yellow.open}See most used licenses${ansi.yellow.close}`, value: kMostUsedLicenses }, ...otherLicenses],
-    ignoreFormatChoices: [kMostUsedLicenses]
+  const license = await select(kPromptLisense, {
+    choices: [{ label: `${ansi.yellow.open}See most used licenses${ansi.yellow.close}`, value: kMostUsedLicenses }, ...otherLicenses],
+    ignoreChoices: [kMostUsedLicenses]
   })
 
   if (license === kMostUsedLicenses) {

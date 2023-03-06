@@ -21,9 +21,9 @@
   "author": "Pierre Demamilly <pierredemailly.pro@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@topcli/prompts": "^0.0.1",
     "@topcli/spinner": "^2.0.0",
     "ansi-styles": "^6.2.1",
-    "prompts": "^2.4.2",
     "spdx-license-list": "^6.6.0"
   },
   "devDependencies": {

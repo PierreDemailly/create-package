@@ -5,21 +5,16 @@ import { vi, expect, test } from 'vitest'
 import spdxLicenseListFull from 'spdx-license-list/full.js'
 
 function * mockPromptsValues () {
-  yield { license: kOtherLicenses }
-  yield { license: kMostUsedLicenses }
-  yield { license: spdxLicenseListFull.MIT }
+  yield kOtherLicenses
+  yield kMostUsedLicenses
+  yield spdxLicenseListFull.MIT
 }
 
 const mockPromptsValues$ = mockPromptsValues()
 
-vi.mock('../src/prompts.js', () => {
+vi.mock('@topcli/prompts', () => {
   return {
-    prompts: async () => {
-      return mockPromptsValues$.next().value
-    },
-    choicesFrom: vi.fn((choices) => {
-      return choices.map(choice => ({ title: choice, value: choice }))
-    })
+    select: async () => mockPromptsValues$.next().value
   }
 })
 
