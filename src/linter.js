@@ -1,4 +1,5 @@
-import { prompts, choicesFrom } from './prompts.js'
+import { confirm, select } from '@topcli/prompts'
+
 import { Feature } from './feature.js'
 
 export const kEslintScript = 'eslint ./**/**.js'
@@ -11,11 +12,8 @@ export async function linter (options = {}) {
     kConfigs.push('xo')
   }
 
-  const { config } = await prompts({
-    name: 'config',
-    type: 'select',
-    message: 'Choose linter config',
-    choices: choicesFrom(kConfigs)
+  const config = await select('Choose linter config', {
+    choices: kConfigs
   })
 
   if (config === 'standard') {
@@ -25,11 +23,8 @@ export async function linter (options = {}) {
       value: 'standard --fix | snazzy'
     })
 
-    const { releaseItKaC } = await prompts({
-      name: 'releaseItKaC',
-      type: 'confirm',
-      message: 'Add @release-it/keep-a-changelog ?',
-      initial: true
+    const releaseItKaC = await confirm('Add @release-it/keep-a-changelog ?', {
+      message: 'Add @release-it/keep-a-changelog ?'
     })
 
     if (releaseItKaC) {

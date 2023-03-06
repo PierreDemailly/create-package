@@ -3,22 +3,18 @@ import { vi, expect, test } from 'vitest'
 import { testing } from '../src/testing.js'
 
 function * mockPromptsValues () {
-  yield { addTestLibrary: true }
-  yield { testRunner: 'vitest' }
-  yield { addTestLibrary: true }
-  yield { testRunner: 'tap' }
+  yield true
+  yield 'vitest'
+  yield true
+  yield 'tap'
 }
 
 const mockPromptsValues$ = mockPromptsValues()
 
-vi.mock('../src/prompts.js', () => {
+vi.mock('@topcli/prompts', () => {
   return {
-    prompts: async () => {
-      return mockPromptsValues$.next().value
-    },
-    choicesFrom: vi.fn((choices) => {
-      return choices.map(choice => ({ title: choice, value: choice }))
-    })
+    select: async () => mockPromptsValues$.next().value,
+    confirm: async () => mockPromptsValues$.next().value
   }
 })
 
