@@ -6,22 +6,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Changed
+
+- `main` path is now relative.
+- set user `license` input correctly.
+- Package version now starts with `0.0.1` instead of `0.1.0`.
+
 ## [0.0.4] - 2023-02-19
 
-### Fixed
+### Added
 
 - Added shebang
 
 ## [0.0.3] - 2023-02-19
 
-### Fixed
+### Changed
 
 - Rename assets .gitignore as it make the file ignored
 - Handle path when copying files
 
 ## [0.0.2] - 2023-02-19
 
-### Fixed
+### Changed
 
 - Uses .mjs extension to run esm outside a module project
 
