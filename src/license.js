@@ -18,11 +18,10 @@ const mostUsedLicenses = []
 const otherLicenses = []
 
 for (const [key, value] of Object.entries(spdxLicenseList)) {
-  const { name } = value
   if (mostUsedLicenseKeys.includes(key)) {
-    mostUsedLicenses.push({ title: name, value })
+    mostUsedLicenses.push({ title: value.name, value: { ...value, license: key } })
   } else {
-    otherLicenses.push({ title: name, value })
+    otherLicenses.push({ title: value.name, value: { ...value, license: key } })
   }
 }
 
@@ -60,12 +59,13 @@ async function * showOtherLicenses () {
 
 export async function license () {
   const feature = new Feature()
-  const { value: license } = await showMostUsedLicenses().next()
-  // TODO: the licenseText MAY includes <year> and <holders>. Replace with gitAuthor
+  const license = await showMostUsedLicenses().next()
+  // FIXME: the licenseText MAY includes <year> and <holders>. Replace with gitAuthor
   feature.files.push({
     path: 'LICENSE',
-    content: license.licenseText
+    content: license.value.licenseText
   })
+  feature.license = license.value.license
 
   return feature
 }

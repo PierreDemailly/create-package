@@ -63,22 +63,20 @@ const mainFile = isCLI ? `${packageName}.js` : 'index.js'
 const packageJson = (`\
 {
   "name": "${packageName}",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "${packageDesc}",
   "scripts": {
       ${fTesting.extractScripts()}
       ${fLinter.extractScripts()}
       "pkg:ok": "npx pkg-ok"
   },
-  "main": "${isCLI ? `./bin/${mainFile}` : mainFile}",${isCLI
+  "main": "${isCLI ? `./bin/${mainFile}` : `./${mainFile}`}",${isCLI
     ? `\n\t"bin": {
       "${packageName}": "./bin/${mainFile}"\n\t},`
     : ''}
-  "keywords": [
-    "TODO"
-  ],
+  "keywords": [],
   "author": "${author}",
-  "license": "ISC",
+  "license": "${fLicense.license}",
   "type": "${module}"
 }`)
 

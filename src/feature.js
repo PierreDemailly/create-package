@@ -8,11 +8,6 @@ const __dirname = path.dirname(__filename)
 const instances = []
 
 export class Feature {
-  deps
-  devDeps
-  files
-  scripts
-
   constructor () {
     instances.push(this)
     this.deps = []
