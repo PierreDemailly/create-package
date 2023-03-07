@@ -16,7 +16,7 @@ export async function testing () {
       type: 'select',
       name: 'testRunner',
       message: 'Choose your test runner:',
-      choices: choicesFrom(['tap', 'vitest'])
+      choices: choicesFrom(['node:test', 'tap', 'vitest'])
       // TODO: required
     })
     feature.devDeps.push(...getRunnerDeps(testRunner).next().value)
@@ -28,6 +28,10 @@ export async function testing () {
 
 function * getRunnerDeps (runner) {
   switch (runner) {
+    case 'node:test':
+      yield []
+      break
+
     case 'tap':
       yield ['tap']
       break
@@ -43,6 +47,12 @@ function * getRunnerDeps (runner) {
 
 function * getRunnerScripts (runner) {
   switch (runner) {
+    case 'node:test':
+      yield [
+        { name: 'test', value: 'node --test ./test/**.test.js' }
+      ]
+      break
+
     case 'tap':
       yield [
         { name: 'test', value: 'tap --no-coverage ./test/**.test.js' },

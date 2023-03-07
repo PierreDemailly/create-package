@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Added
+
+- Supports for Node.js test runner
+
 ### Changed
 
 - `main` path is now relative.
