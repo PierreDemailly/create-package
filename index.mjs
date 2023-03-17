@@ -31,7 +31,8 @@ rl.on('SIGINT', () => {
 
 const execAsync = promisify(exec)
 
-const packageName = await prompt('Package name', true)
+const packageNameArg = process.argv[2]
+const packageName = packageNameArg ?? await prompt('Package name', true)
 const packageDesc = await prompt('Package description')
 const { module } = await prompts({
   name: 'module',
