@@ -1,5 +1,6 @@
 
 import { vi, expect, test } from 'vitest'
+
 import { testing } from '../src/testing.js'
 
 function * mockPromptsValues () {
@@ -10,6 +11,7 @@ function * mockPromptsValues () {
   yield { addTestLibrary: true }
   yield { testRunner: 'tap' }
 }
+
 
 const mockPromptsValues$ = mockPromptsValues()
 

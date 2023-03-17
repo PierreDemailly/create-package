@@ -1,5 +1,6 @@
 
 import { vi, describe, expect, test } from 'vitest'
+
 import { linter, kEslintScript } from '../src/linter.js'
 
 function * mockPromptsValues () {
