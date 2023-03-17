@@ -1,6 +1,7 @@
 
-import { vi, expect, test } from 'vitest'
 import { license, kMostUsedLicenses, kOtherLicenses } from '../src/license.js'
+
+import { vi, expect, test } from 'vitest'
 import spdxLicenseListFull from 'spdx-license-list/full.js'
 
 function * mockPromptsValues () {

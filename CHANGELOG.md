@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Added
 
+- Supports Node.js test runner
 - command line arg package name
 
 ### Changed

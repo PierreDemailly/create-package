@@ -1,13 +1,17 @@
 
 import { vi, expect, test } from 'vitest'
+
 import { testing } from '../src/testing.js'
 
 function * mockPromptsValues () {
+  yield { addTestLibrary: true }
+  yield { testRunner: 'node:test' }
   yield { addTestLibrary: true }
   yield { testRunner: 'vitest' }
   yield { addTestLibrary: true }
   yield { testRunner: 'tap' }
 }
+
 
 const mockPromptsValues$ = mockPromptsValues()
 
@@ -20,6 +24,14 @@ vi.mock('../src/prompts.js', () => {
       return choices.map(choice => ({ title: choice, value: choice }))
     })
   }
+})
+
+test('node:test', async () => {
+  const { scripts, devDeps } = await testing()
+  expect(scripts).toStrictEqual([
+    { name: 'test', value: 'node --test ./test/**.test.js' }
+  ])
+  expect(devDeps).toStrictEqual([])
 })
 
 test('vitest', async () => {
