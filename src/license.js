@@ -57,7 +57,7 @@ export async function license () {
   // TODO: the licenseText MAY includes <year> and <holders>. Replace with gitAuthor
   feature.files.push({
     path: 'LICENSE',
-    content: licenseInput.licenseText
+    content: licenseInput.value.licenseText
   })
   feature.license = license.value.license
 
