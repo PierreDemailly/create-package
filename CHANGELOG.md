@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.0.5] - 2023-04-19
+
 ### Added
 
 - Supports Node.js test runner.
