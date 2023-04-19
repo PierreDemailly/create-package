@@ -4,14 +4,13 @@ import { vi, expect, test } from 'vitest'
 import { testing } from '../src/testing.js'
 
 function * mockPromptsValues () {
-  yield { addTestLibrary: true }
-  yield { testRunner: 'node:test' }
-  yield { addTestLibrary: true }
-  yield { testRunner: 'vitest' }
-  yield { addTestLibrary: true }
-  yield { testRunner: 'tap' }
+  yield true
+  yield 'node:test'
+  yield true
+  yield 'vitest'
+  yield true
+  yield 'tap'
 }
-
 
 const mockPromptsValues$ = mockPromptsValues()
 

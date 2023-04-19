@@ -19,9 +19,9 @@ const otherLicenses = []
 
 for (const [key, value] of Object.entries(spdxLicenseList)) {
   if (mostUsedLicenseKeys.includes(key)) {
-    mostUsedLicenses.push({ label: name, value: { ...value, license: key } })
+    mostUsedLicenses.push({ label: key, value: { ...value, license: key } })
   } else {
-    otherLicenses.push({ label: name, value: { ...value, license: key } })
+    otherLicenses.push({ label: key, value: { ...value, license: key } })
   }
 }
 
@@ -59,7 +59,7 @@ export async function license () {
     path: 'LICENSE',
     content: licenseInput.value.licenseText
   })
-  feature.license = license.value.license
+  feature.license = licenseInput.value.license
 
   return feature
 }

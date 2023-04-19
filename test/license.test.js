@@ -18,7 +18,7 @@ vi.mock('@topcli/prompts', () => {
   }
 })
 
-test('it should return MIT', async () => {
+test('it should return', async () => {
   const feature = await license()
   expect(feature.files).toStrictEqual([{ path: 'LICENSE', content: spdxLicenseListFull.MIT.licenseText }])
 })
