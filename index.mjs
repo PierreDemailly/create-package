@@ -4,12 +4,11 @@ import { writeFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { exec } from 'node:child_process'
 import { promisify } from 'node:util'
-import { createInterface } from 'node:readline'
 
 import { Spinner } from '@topcli/spinner'
+import { select, prompt, confirm } from '@topcli/prompts'
 
 import { gitAuthor } from './src/utils.js'
-import { choicesFrom, prompt, prompts } from './src/prompts.js'
 import { license } from './src/license.js'
 import { linter } from './src/linter.js'
 import { Feature } from './src/feature.js'
@@ -19,32 +18,14 @@ import { readme } from './src/readme.js'
 import { editorConfig } from './src/editorConfig.js'
 import { gitignore } from './src/gitignore.js'
 
-// force exit with CTRL + C
-// because `prompts` handle it as a return value
-const rl = createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
-rl.on('SIGINT', () => {
-  process.exit()
-})
-
 const execAsync = promisify(exec)
 
-const packageNameArg = process.argv[2]
-const packageName = packageNameArg ?? await prompt('Package name', true)
+const packageName = await prompt('Package name') // TODO: required
 const packageDesc = await prompt('Package description')
-const { module } = await prompts({
-  name: 'module',
-  type: 'select',
-  message: 'Is your project ESM or CommonJS ?',
-  choices: choicesFrom(['module', 'commonjs']),
-  initial: 0
+const module = await select('Is your project ESM or CommonJS ?', {
+  choices: ['module', 'commonjs']
 })
-const { isCLI } = await prompts({
-  name: 'isCLI',
-  type: 'confirm',
-  message: 'Is your project a CLI ?',
+const isCLI = await confirm('Is your project a CLI ?', {
   initial: false
 })
 const fLicense = await license()

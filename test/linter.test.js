@@ -4,27 +4,23 @@ import { vi, describe, expect, test } from 'vitest'
 import { linter, kEslintScript } from '../src/linter.js'
 
 function * mockPromptsValues () {
-  yield { config: 'eslint-config-airbnb-base' }
-  yield { config: 'xo' }
+  yield 'eslint-config-airbnb-base'
+  yield 'xo'
   yield * standardPrompts()
-  yield { config: '@nodesecure/eslint-config' }
+  yield '@nodesecure/eslint-config'
 }
 
 function * standardPrompts () {
-  yield { config: 'standard' }
-  yield { releaseItKaC: true }
+  yield 'standard'
+  yield true
 }
 
 const mockPromptsValues$ = mockPromptsValues()
 
-vi.mock('../src/prompts.js', () => {
+vi.mock('@topcli/prompts', () => {
   return {
-    prompts: async () => {
-      return mockPromptsValues$.next().value
-    },
-    choicesFrom: vi.fn((choices) => {
-      return choices.map(choice => ({ title: choice, value: choice }))
-    })
+    select: async () => mockPromptsValues$.next().value,
+    confirm: async () => mockPromptsValues$.next().value
   }
 })
 
