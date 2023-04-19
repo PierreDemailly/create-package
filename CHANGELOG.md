@@ -9,13 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 
 - Supports Node.js test runner
-- command line arg package name
+- Command line arg package name
 
 ### Changed
 
 - `main` path is now relative.
-- set user `license` input correctly.
+- Set user `license` input correctly.
 - Package version now starts with `0.0.1` instead of `0.1.0`.
+- Migrate from `prompts` to `@topcli/prompts`
 
 ## [0.0.4] - 2023-02-19
 
