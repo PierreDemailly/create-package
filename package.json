@@ -21,18 +21,18 @@
   "author": "Pierre Demamilly <pierredemailly.pro@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@topcli/prompts": "^0.0.3",
+    "@topcli/prompts": "^0.1.1",
     "@topcli/spinner": "^2.0.0",
     "ansi-styles": "^6.2.1",
     "spdx-license-list": "^6.6.0"
   },
   "devDependencies": {
     "@release-it/keep-a-changelog": "^3.1.0",
-    "@vitest/coverage-c8": "^0.30.1",
+    "@vitest/coverage-c8": "^0.31.0",
     "pkg-ok": "^3.0.0",
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",
-    "vitest": "^0.30.1"
+    "vitest": "^0.31.0"
   },
   "files": [
     "index.mjs",
