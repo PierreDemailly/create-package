@@ -28,7 +28,7 @@ for (const [key, value] of Object.entries(spdxLicenseList)) {
 async function * showMostUsedLicenses () {
   const license = await select(kPromptLisense, {
     choices: [...mostUsedLicenses, { label: `${ansi.yellow.open}See other licenses${ansi.yellow.close}`, value: kOtherLicenses }],
-    ignoreChoices: [kOtherLicenses]
+    ignoreValues: [kOtherLicenses]
   })
 
   if (license === kOtherLicenses) {
@@ -41,7 +41,7 @@ async function * showMostUsedLicenses () {
 async function * showOtherLicenses () {
   const license = await select(kPromptLisense, {
     choices: [{ label: `${ansi.yellow.open}See most used licenses${ansi.yellow.close}`, value: kMostUsedLicenses }, ...otherLicenses],
-    ignoreChoices: [kMostUsedLicenses]
+    ignoreValues: [kMostUsedLicenses]
   })
 
   if (license === kMostUsedLicenses) {

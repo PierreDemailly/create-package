@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { existsSync } from 'node:fs'
 import { writeFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { exec } from 'node:child_process'
@@ -20,7 +21,20 @@ import { gitignore } from './src/gitignore.js'
 
 const execAsync = promisify(exec)
 
-const packageName = await prompt('Package name') // TODO: required
+const packageNameArg = process.argv[2]
+if (packageNameArg) {
+  if (existsSync(join(process.cwd(), packageNameArg))) {
+    throw new Error(`Folder ${packageNameArg} already exists`)
+  }
+}
+const packageName = packageNameArg ?? await prompt('Package name', {
+  validators: [
+    {
+      validate: (value) => !existsSync(join(process.cwd(), value)),
+      error: (value) => `Folder ${value} already exists`
+    }
+  ]
+}) // TODO: required -> should be provided @topcli/promtps side
 const packageDesc = await prompt('Package description')
 const module = await select('Is your project ESM or CommonJS ?', {
   choices: ['module', 'commonjs']

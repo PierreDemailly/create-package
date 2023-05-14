@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Changed
+
+- Fixed command line arg package name regression.
+- Fixed license select: program threw cause of bad implementation of `@topcli/prompts`.
+- Package name can no longer be an existing folder.
+
 ## [0.0.5] - 2023-04-19
 
 ### Added
