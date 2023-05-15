@@ -1,58 +1,59 @@
-import { readFileSync, writeFileSync } from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+// Import Node.js Dependencies
+import { readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const instances = []
+const instances = [];
 
 export class Feature {
-  constructor () {
-    instances.push(this)
-    this.deps = []
-    this.devDeps = []
-    this.files = []
-    this.scripts = []
+  constructor() {
+    instances.push(this);
+    this.deps = [];
+    this.devDeps = [];
+    this.files = [];
+    this.scripts = [];
   }
 
-  static mergeAll () {
+  static mergeAll() {
     return instances.reduce((acc, obj) => {
       for (const key in obj) {
         if (acc[key]) {
-          acc[key].push(...obj[key])
-        } else {
-          acc[key] = [...obj[key]]
+          acc[key].push(...obj[key]);
+        }
+        else {
+          acc[key] = [...obj[key]];
         }
       }
-      return acc
-    }, {})
+
+      return acc;
+    }, {});
   }
 
-  createFiles (dir) {
+  createFiles(dir) {
     if (!this.files.length) {
-      return
+      return;
     }
 
     for (const file of this.files) {
       if (file.copy) {
-        const content = readFileSync(path.resolve(__dirname, `./assets/${file.copy}`))
-        writeFileSync(path.join(process.cwd(), dir, file.path ?? file.copy), content)
+        const content = readFileSync(path.resolve(__dirname, `./assets/${file.copy}`));
+        writeFileSync(path.join(process.cwd(), dir, file.path ?? file.copy), content);
 
-        return
+        return;
       }
 
-      writeFileSync(path.join(process.cwd(), dir, file.path), file.content)
+      writeFileSync(path.join(process.cwd(), dir, file.path), file.content);
     }
   }
 
-  extractScripts () {
+  extractScripts() {
     if (!this.scripts.length) {
-      return '\n'
+      return "\n";
     }
 
-    return this.scripts.map((script) => {
-      return `"${script.name}": "${script.value}",`
-    }).join('\n')
+    return this.scripts.map((script) => `"${script.name}": "${script.value}",`).join("\n");
   }
 }

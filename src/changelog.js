@@ -1,10 +1,11 @@
-import { Feature } from './feature.js'
+// Import Internal Dependencies
+import { Feature } from "./feature.js";
 
-export function changelog () {
-  const feature = new Feature()
+export function changelog() {
+  const feature = new Feature();
   feature.files.push({
-    copy: 'CHANGELOG.md'
-  })
+    copy: "CHANGELOG.md"
+  });
 
-  return feature
+  return feature;
 }

@@ -1,10 +1,11 @@
-import { Feature } from './feature.js'
+// Import Internal Dependencies
+import { Feature } from "./feature.js";
 
-export function editorConfig () {
-  const feature = new Feature()
+export function editorConfig() {
+  const feature = new Feature();
   feature.files.push({
-    copy: '.editorconfig'
-  })
+    copy: ".editorconfig"
+  });
 
-  return feature
+  return feature;
 }
