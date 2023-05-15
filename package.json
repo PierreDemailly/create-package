@@ -1,12 +1,12 @@
 {
   "name": "@pierred/create-package",
   "version": "0.0.5",
-  "description": "",
+  "description": "Generate Node.js package boilerplate",
   "scripts": {
     "test": "vitest run",
     "test:c8": "vitest run --coverage",
-    "lint": "standard --fix | snazzy",
-    "lint:ci": "standard | snazzy",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --ext js --ext mjs --fix",
     "pkg:ok": "npx pkg-ok"
   },
   "bin": {
@@ -21,6 +21,7 @@
   "author": "Pierre Demamilly <pierredemailly.pro@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@nodesecure/eslint-config": "^1.7.0",
     "@topcli/prompts": "^0.1.1",
     "@topcli/spinner": "^2.0.0",
     "ansi-styles": "^6.2.1",
@@ -29,9 +30,8 @@
   "devDependencies": {
     "@release-it/keep-a-changelog": "^3.1.0",
     "@vitest/coverage-c8": "^0.31.0",
+    "eslint": "^8.40.0",
     "pkg-ok": "^3.0.0",
-    "snazzy": "^9.0.0",
-    "standard": "^17.0.0",
     "vitest": "^0.31.0"
   },
   "files": [
@@ -41,5 +41,12 @@
   "type": "module",
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "extends": "@nodesecure/eslint-config",
+    "parserOptions": {
+      "sourceType": "module",
+      "requireConfigFile": false
+    }
   }
 }
