@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+- Removed license prompt, license is now MIT.
+- License now include year and name (name is taken from git config).
 - Fixed command line arg package name regression.
 - Fixed license select: program threw cause of bad implementation of `@topcli/prompts`.
 - Package name can no longer be an existing folder.
