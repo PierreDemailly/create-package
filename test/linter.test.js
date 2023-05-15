@@ -1,6 +1,7 @@
-
+// Import Third-party Dependencies
 import { vi, describe, expect, test } from 'vitest'
 
+// Import Internal Dependencies
 import { linter, kEslintScript } from '../src/linter.js'
 
 function * mockPromptsValues () {

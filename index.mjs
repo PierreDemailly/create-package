@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 
+// Import Node.js Dependencies
 import { existsSync } from 'node:fs'
 import { writeFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { exec } from 'node:child_process'
 import { promisify } from 'node:util'
 
+// Import Third-party Dependencies
 import { Spinner } from '@topcli/spinner'
 import { select, prompt, confirm } from '@topcli/prompts'
 
+// Import Internal Dependencies
 import { gitAuthor } from './src/utils.js'
 import { license } from './src/license.js'
 import { linter } from './src/linter.js'

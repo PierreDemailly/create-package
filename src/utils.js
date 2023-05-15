@@ -1,3 +1,4 @@
+// Import Node.js Dependencies
 import { execSync } from 'node:child_process'
 
 export function gitAuthor () {

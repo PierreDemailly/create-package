@@ -1,5 +1,7 @@
+// Import Third-party Dependencies
 import { vi, expect, test } from 'vitest'
 
+// Import Internal Dependencies
 import { Feature } from '../src/feature.js'
 
 const writeLogs = []

@@ -1,5 +1,7 @@
+// Import Third-party Dependencies
 import { confirm, select } from '@topcli/prompts'
 
+// Import Internal Dependencies
 import { Feature } from './feature.js'
 
 export const kEslintScript = 'eslint ./**/**.js'
