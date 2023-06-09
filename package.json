@@ -22,17 +22,17 @@
   "license": "ISC",
   "dependencies": {
     "@nodesecure/eslint-config": "^1.7.0",
-    "@topcli/prompts": "^0.1.1",
+    "@topcli/prompts": "^1.0.0",
     "@topcli/spinner": "^2.0.0",
     "ansi-styles": "^6.2.1",
     "spdx-license-list": "^6.6.0"
   },
   "devDependencies": {
     "@release-it/keep-a-changelog": "^3.1.0",
-    "@vitest/coverage-c8": "^0.31.0",
-    "eslint": "^8.40.0",
+    "@vitest/coverage-c8": "^0.32.0",
+    "eslint": "^8.42.0",
     "pkg-ok": "^3.0.0",
-    "vitest": "^0.31.0"
+    "vitest": "^0.32.0"
   },
   "files": [
     "index.mjs",

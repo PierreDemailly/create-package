@@ -9,7 +9,7 @@ import { promisify } from "node:util";
 
 // Import Third-party Dependencies
 import { Spinner } from "@topcli/spinner";
-import { select, prompt, confirm } from "@topcli/prompts";
+import { select, question, confirm } from "@topcli/prompts";
 
 // Import Internal Dependencies
 import { gitAuthor } from "./src/utils.js";
@@ -31,7 +31,7 @@ if (packageNameArg) {
   }
 }
 // TODO: required -> should be provided @topcli/promtps side
-const packageName = packageNameArg ?? await prompt("Package name", {
+const packageName = packageNameArg ?? await question("Package name", {
   validators: [
     {
       validate: (value) => !existsSync(join(process.cwd(), value)),
@@ -39,7 +39,7 @@ const packageName = packageNameArg ?? await prompt("Package name", {
     }
   ]
 });
-const packageDesc = await prompt("Package description");
+const packageDesc = await question("Package description");
 const module = await select("Is your project ESM or CommonJS ?", {
   choices: ["module", "commonjs"]
 });
