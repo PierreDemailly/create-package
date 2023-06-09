@@ -9,7 +9,7 @@ import { promisify } from "node:util";
 
 // Import Third-party Dependencies
 import { Spinner } from "@topcli/spinner";
-import { select, question, confirm } from "@topcli/prompts";
+import { select, question, confirm, required } from "@topcli/prompts";
 
 // Import Internal Dependencies
 import { gitAuthor } from "./src/utils.js";
@@ -30,9 +30,9 @@ if (packageNameArg) {
     throw new Error(`Folder ${packageNameArg} already exists`);
   }
 }
-// TODO: required -> should be provided @topcli/promtps side
 const packageName = packageNameArg ?? await question("Package name", {
   validators: [
+    required(),
     {
       validate: (value) => !existsSync(join(process.cwd(), value)),
       error: (value) => `Folder ${value} already exists`
