@@ -6,8 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.1.0] - 2023-06-09
+
 ### Changed
 
+- Package name is now required
+- Updated dependencies
 - Removed license prompt, license is now MIT.
 - License now include year and name (name is taken from git config).
 - Fixed command line arg package name regression.
