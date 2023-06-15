@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.1.1] - 2023-06-15
+
 ### Changed
 
 - Fixed license: make path relative instead of retrieve file from cwd
