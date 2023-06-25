@@ -1,6 +1,6 @@
 {
   "name": "@pierred/create-package",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Generate Node.js package boilerplate",
   "scripts": {
     "test": "vitest run",

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.1.2] - 2023-06-25
+
 ### Fixed
 
 - `@nodesecure/eslint-config`moved from dependencies to devDependenceis
