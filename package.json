@@ -21,7 +21,7 @@
   "author": "Pierre Demamilly <pierredemailly.pro@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@topcli/prompts": "^1.0.0",
+    "@topcli/prompts": "^1.0.1",
     "@topcli/spinner": "^2.0.0",
     "ansi-styles": "^6.2.1",
     "spdx-license-list": "^6.6.0"
@@ -29,10 +29,10 @@
   "devDependencies": {
     "@nodesecure/eslint-config": "^1.7.0",
     "@release-it/keep-a-changelog": "^3.1.0",
-    "@vitest/coverage-c8": "^0.32.0",
-    "eslint": "^8.42.0",
+    "@vitest/coverage-c8": "^0.32.2",
+    "eslint": "^8.43.0",
     "pkg-ok": "^3.0.0",
-    "vitest": "^0.32.0"
+    "vitest": "^0.32.2"
   },
   "files": [
     "index.mjs",
