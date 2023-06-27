@@ -134,3 +134,6 @@ dist
 
 # Docs
 docs
+
+# Misc
+.DS_Store
