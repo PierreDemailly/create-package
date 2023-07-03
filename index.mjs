@@ -6,6 +6,7 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
+import { EOL } from "node:os";
 
 // Import Third-party Dependencies
 import { Spinner } from "@topcli/spinner";
@@ -98,7 +99,11 @@ let fileContent = "console.log(\"Hello world\")";
 if (!fLinter.devDeps.includes("standard")) {
   fileContent += ";";
 }
-await writeFile(mainFilePath, "console.log(\"Hello world\")");
+if (isCLI) {
+  fileContent = `#!/usr/bin/env node${EOL}${EOL}${fileContent}`;
+}
+
+await writeFile(mainFilePath, isCLI);
 
 createFilesSpinner.succeed(`Project initialized: ./${packageName}`);
 
