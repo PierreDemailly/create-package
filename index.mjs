@@ -93,6 +93,11 @@ if (isCLI) {
   await mkdir(`${packageName}/bin`);
 }
 const mainFilePath = join(process.cwd(), packageName, isCLI ? "./bin" : "./", mainFile);
+
+let fileContent = "console.log(\"Hello world\")";
+if (!fLinter.devDeps.includes("standard")) {
+  fileContent += ";";
+}
 await writeFile(mainFilePath, "console.log(\"Hello world\")");
 
 createFilesSpinner.succeed(`Project initialized: ./${packageName}`);
