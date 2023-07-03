@@ -59,7 +59,7 @@ const createFilesSpinner = new Spinner({ name: "line" }).start("Create project")
 await mkdir(packageName);
 
 const author = gitAuthor();
-const mainFile = isCLI ? `${packageName}.js` : "index.js";
+const mainFile = isCLI ? `${packageName}.${module === "module" ? "mjs" : "js"}` : "index.js";
 const packageJson = (`\
 {
   "name": "${packageName}",
