@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 
-- Binary executable now have `.mjs` extension when using ESM.
+- Binary executables now have `.mjs` extension when using ESM.
 - Linter passes when project is initialized
 - Improved support on Windows with `EOL` (`node:os`)
 
