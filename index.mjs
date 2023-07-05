@@ -6,6 +6,7 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
+import { EOL } from "node:os";
 
 // Import Third-party Dependencies
 import { Spinner } from "@topcli/spinner";
@@ -59,7 +60,7 @@ const createFilesSpinner = new Spinner({ name: "line" }).start("Create project")
 await mkdir(packageName);
 
 const author = gitAuthor();
-const mainFile = isCLI ? `${packageName}.js` : "index.js";
+const mainFile = isCLI ? `${packageName}.${module === "module" ? "mjs" : "js"}` : "index.js";
 const packageJson = (`\
 {
   "name": "${packageName}",
@@ -93,7 +94,16 @@ if (isCLI) {
   await mkdir(`${packageName}/bin`);
 }
 const mainFilePath = join(process.cwd(), packageName, isCLI ? "./bin" : "./", mainFile);
-await writeFile(mainFilePath, "console.log(\"Hello world\")");
+
+let fileContent = "console.log(\"Hello world\")";
+if (!fLinter.devDeps.includes("standard")) {
+  fileContent += ";";
+}
+if (isCLI) {
+  fileContent = `#!/usr/bin/env node${EOL}${EOL}${fileContent}`;
+}
+
+await writeFile(mainFilePath, isCLI);
 
 createFilesSpinner.succeed(`Project initialized: ./${packageName}`);
 

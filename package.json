@@ -12,6 +12,7 @@
   "bin": {
     "create-package": "./index.mjs"
   },
+  "main": "./index.mjs",
   "keywords": [
     "create",
     "package",

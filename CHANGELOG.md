@@ -6,11 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Added
+
+- Added shebang for binary executables.
+
+### Fixed
+
+- Binary executables now have `.mjs` extension when using ESM.
+- Linter passes when project is initialized
+- Improved support on Windows with `EOL` (`node:os`)
+
 ## [0.1.2] - 2023-06-25
 
 ### Fixed
 
-- `@nodesecure/eslint-config`moved from dependencies to devDependenceis
+- `@nodesecure/eslint-config` moved from dependencies to devDependenceis
 
 ## [0.1.1] - 2023-06-15
 

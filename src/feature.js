@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { EOL } from "node:os";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,9 +52,9 @@ export class Feature {
 
   extractScripts() {
     if (!this.scripts.length) {
-      return "\n";
+      return EOL;
     }
 
-    return this.scripts.map((script) => `"${script.name}": "${script.value}",`).join("\n");
+    return this.scripts.map((script) => `"${script.name}": "${script.value}",`).join(EOL);
   }
 }

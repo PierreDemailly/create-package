@@ -1,3 +1,6 @@
+// Import Node.js Dependencies
+import { EOL } from "node:os";
+
 // Import Third-party Dependencies
 import { vi, expect, test } from "vitest";
 
@@ -39,7 +42,7 @@ test("extractScripts", () => {
   const feature = new Feature();
   feature.scripts.push({ name: "aaa", value: "bbb" }, { name: "ccc", value: "ddd" });
   const scripts = feature.extractScripts();
-  expect(scripts).toStrictEqual("\"aaa\": \"bbb\",\n\"ccc\": \"ddd\",");
+  expect(scripts).toStrictEqual(`"aaa": "bbb",${EOL}"ccc": "ddd",`);
 });
 
 test("createFiles", () => {

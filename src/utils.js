@@ -1,10 +1,11 @@
 // Import Node.js Dependencies
 import { execSync } from "node:child_process";
+import { EOL } from "node:os";
 
 export function gitAuthor() {
   const author = {
-    name: execSync("git config user.name").toString().replace("\n", ""),
-    email: execSync("git config user.email").toString().replace("\n", "")
+    name: execSync("git config user.name").toString().replace(EOL, ""),
+    email: execSync("git config user.email").toString().replace(EOL, "")
   };
 
   return author.name ? `${author.name} <${author.email}>` : "";
