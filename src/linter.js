@@ -40,13 +40,21 @@ export async function linter(options = {}) {
   }
   else {
     feature.devDeps.push("eslint", config);
-    const eslintrc = `extends:\n\t- '${config}'\n`;
-    feature.files.push({
-      path: ".eslintrc",
-      content: eslintrc
-    });
     feature.scripts.push({ name: "lint", value: kEslintScript });
   }
+
+  const eslintrc = {
+    extends: "@nodesecure/eslint-config",
+    parserOptions: {
+      sourceType: options.ESM ? "module" : "script",
+      requireConfigFile: false
+    }
+  };
+
+  feature.files.push({
+    path: ".eslintrc",
+    content: JSON.stringify(eslintrc, null, 2)
+  });
 
   return feature;
 }

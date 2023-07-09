@@ -103,7 +103,7 @@ if (isCLI) {
   fileContent = `#!/usr/bin/env node${EOL}${EOL}${fileContent}`;
 }
 
-await writeFile(mainFilePath, isCLI);
+await writeFile(mainFilePath, fileContent);
 
 createFilesSpinner.succeed(`Project initialized: ./${packageName}`);
 
