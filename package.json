@@ -33,7 +33,7 @@
     "@vitest/coverage-c8": "^0.32.4",
     "eslint": "^8.44.0",
     "pkg-ok": "^3.0.0",
-    "vitest": "^0.32.4"
+    "vitest": "^0.33.0"
   },
   "files": [
     "index.mjs",
