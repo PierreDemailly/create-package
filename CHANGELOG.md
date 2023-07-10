@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 
 - Added shebang for binary executables.
+- Make linter config to be json instead of yaml
 
 ### Fixed
 

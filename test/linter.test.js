@@ -6,8 +6,10 @@ import { linter, kEslintScript } from "../src/linter.js";
 
 function* mockPromptsValues() {
   yield "eslint-config-airbnb-base";
+  yield "eslint-config-airbnb-base";
   yield "xo";
   yield* standardPrompts();
+  yield "@nodesecure/eslint-config";
   yield "@nodesecure/eslint-config";
 }
 
@@ -32,7 +34,33 @@ describe("Testing each runner", () => {
     expect(devDeps).toStrictEqual(["eslint", "eslint-config-airbnb-base"]);
     expect(files).toStrictEqual([{
       path: ".eslintrc",
-      content: "extends:\n\t- 'eslint-config-airbnb-base'\n"
+      content: JSON.stringify({
+        extends: "eslint-config-airbnb-base",
+        parserOptions: {
+          sourceType: "script",
+          requireConfigFile: false
+        }
+      }, null, 2)
+    }]);
+    expect(scripts).toStrictEqual([{
+      name: "lint",
+      value: kEslintScript
+    }]);
+  });
+
+  test("eslint-config-airbnb-base ESM", async() => {
+    const { deps, devDeps, files, scripts } = await linter({ ESM: true });
+    expect(deps).toStrictEqual([]);
+    expect(devDeps).toStrictEqual(["eslint", "eslint-config-airbnb-base"]);
+    expect(files).toStrictEqual([{
+      path: ".eslintrc",
+      content: JSON.stringify({
+        extends: "eslint-config-airbnb-base",
+        parserOptions: {
+          sourceType: "module",
+          requireConfigFile: false
+        }
+      }, null, 2)
     }]);
     expect(scripts).toStrictEqual([{
       name: "lint",
@@ -68,7 +96,33 @@ describe("Testing each runner", () => {
     expect(devDeps).toStrictEqual(["eslint", "@nodesecure/eslint-config"]);
     expect(files).toStrictEqual([{
       path: ".eslintrc",
-      content: "extends:\n\t- '@nodesecure/eslint-config'\n"
+      content: JSON.stringify({
+        extends: "@nodesecure/eslint-config",
+        parserOptions: {
+          sourceType: "script",
+          requireConfigFile: false
+        }
+      }, null, 2)
+    }]);
+    expect(scripts).toStrictEqual([{
+      name: "lint",
+      value: kEslintScript
+    }]);
+  });
+
+  test("@nodesecure/eslint-config ESM", async() => {
+    const { deps, devDeps, files, scripts } = await linter({ ESM: true });
+    expect(deps).toStrictEqual([]);
+    expect(devDeps).toStrictEqual(["eslint", "@nodesecure/eslint-config"]);
+    expect(files).toStrictEqual([{
+      path: ".eslintrc",
+      content: JSON.stringify({
+        extends: "@nodesecure/eslint-config",
+        parserOptions: {
+          sourceType: "module",
+          requireConfigFile: false
+        }
+      }, null, 2)
     }]);
     expect(scripts).toStrictEqual([{
       name: "lint",

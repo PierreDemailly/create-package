@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
@@ -38,7 +38,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: NodeSecure/ci-action@v1
+      - uses: NodeSecure/ci-action@177c57fe32c75cafabe87f6e4515d277cc37ae6c # v1.4.1
         with:
           warnings: warning
   checkkac:
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Changelog check
-        uses: Zomzog/changelog-checker@v1.3.0
+        uses: Zomzog/changelog-checker@09cfe9ad3618dcbfdba261adce0c41904cabb8c4 # v1.3.0
         with:
           fileName: CHANGELOG.md
         env:
