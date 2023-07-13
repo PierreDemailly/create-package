@@ -22,6 +22,7 @@ import { changelog } from "./src/changelog.js";
 import { readme } from "./src/readme.js";
 import { editorConfig } from "./src/editorConfig.js";
 import { gitignore } from "./src/gitignore.js";
+import { npmrc } from "./src/npmrc.js";
 
 const execAsync = promisify(exec);
 
@@ -54,6 +55,7 @@ const fChangelog = changelog();
 const fGitignore = gitignore();
 const fReadme = readme(packageName);
 const fEditorConfig = editorConfig();
+const fNpmrc = await npmrc();
 
 const createFilesSpinner = new Spinner({ name: "line" }).start("Create project");
 
@@ -89,6 +91,7 @@ fChangelog.createFiles(packageName);
 fGitignore.createFiles(packageName);
 fReadme.createFiles(packageName);
 fEditorConfig.createFiles(packageName);
+fNpmrc.createFiles(packageName);
 
 if (isCLI) {
   await mkdir(`${packageName}/bin`);
