@@ -2,11 +2,10 @@
 import { confirm, select } from "@topcli/prompts";
 
 // Import Internal Dependencies
-import { Feature } from "./feature.js";
+// TODO: rename config.
+import { projectConfig } from "./projectConfig.js";
 
 export async function testing() {
-  const feature = new Feature();
-
   const addTestLibrary = await confirm("Will you write unit tests?", {
     initial: true
   });
@@ -16,25 +15,23 @@ export async function testing() {
       choices: ["node:test", "tap", "vitest"]
       // TODO: required
     });
-    feature.devDeps.push(...getRunnerDeps(testRunner).next().value);
-    feature.scripts.push(...getRunnerScripts(testRunner).next().value);
+    projectConfig.devDeps.push(...getRunnerDeps(testRunner));
+    projectConfig.scripts.push(...getRunnerScripts(testRunner));
   }
-
-  return feature;
 }
 
 function* getRunnerDeps(runner) {
   switch (runner) {
     case "node:test":
-      yield [];
       break;
 
     case "tap":
-      yield ["tap"];
+      yield "tap";
       break;
 
     case "vitest":
-      yield ["vitest", "@vitest/coverage-c8"];
+      yield "vitest";
+      yield "@vitest/coverage-c8";
       break;
 
     default:
@@ -45,23 +42,17 @@ function* getRunnerDeps(runner) {
 function* getRunnerScripts(runner) {
   switch (runner) {
     case "node:test":
-      yield [
-        { name: "test", value: "node --test ./test/**.test.js" }
-      ];
+      yield { name: "test", value: "node --test ./test/**.test.js" };
       break;
 
     case "tap":
-      yield [
-        { name: "test", value: "tap --no-coverage ./test/**.test.js" },
-        { name: "test:c8", value: "tap ./test/**.test.js" }
-      ];
+      yield { name: "test", value: "tap --no-coverage ./test/**.test.js" };
+      yield { name: "test:c8", value: "tap ./test/**.test.js" };
       break;
 
     case "vitest":
-      yield [
-        { name: "test", value: "vitest run" },
-        { name: "test:c8", value: "vitest run --coverage" }
-      ];
+      yield { name: "test", value: "vitest run" };
+      yield { name: "test:c8", value: "vitest run --coverage" };
       break;
 
     default:

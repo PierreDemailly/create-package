@@ -1,8 +1,10 @@
 // Import Third-party Dependencies
-import { vi, describe, expect, test } from "vitest";
+import { vi, describe, expect, test, beforeEach } from "vitest";
 
 // Import Internal Dependencies
 import { linter, kEslintScript } from "../src/linter.js";
+import { resetProjectConfig } from "./helpers.ts";
+import { projectConfig } from "../src/projectConfig.js";
 
 function* mockPromptsValues() {
   yield "eslint-config-airbnb-base";
@@ -28,8 +30,13 @@ vi.mock("@topcli/prompts", () => {
 });
 
 describe("Testing each runner", () => {
+  beforeEach(() => {
+    resetProjectConfig();
+  });
+
   test("eslint-config-airbnb-base", async() => {
-    const { deps, devDeps, files, scripts } = await linter();
+    await linter();
+    const { deps, devDeps, files, scripts } = projectConfig;
     expect(deps).toStrictEqual([]);
     expect(devDeps).toStrictEqual(["eslint", "eslint-config-airbnb-base"]);
     expect(files).toStrictEqual([{
@@ -49,7 +56,8 @@ describe("Testing each runner", () => {
   });
 
   test("eslint-config-airbnb-base ESM", async() => {
-    const { deps, devDeps, files, scripts } = await linter({ ESM: true });
+    await linter({ ESM: true });
+    const { deps, devDeps, files, scripts } = projectConfig;
     expect(deps).toStrictEqual([]);
     expect(devDeps).toStrictEqual(["eslint", "eslint-config-airbnb-base"]);
     expect(files).toStrictEqual([{
@@ -69,7 +77,8 @@ describe("Testing each runner", () => {
   });
 
   test("xo", async() => {
-    const { deps, devDeps, files, scripts } = await linter({ ESM: true });
+    await linter({ ESM: true });
+    const { deps, devDeps, files, scripts } = projectConfig;
     expect(deps).toStrictEqual([]);
     expect(devDeps).toStrictEqual(["xo"]);
     expect(files).toStrictEqual([]);
@@ -80,7 +89,8 @@ describe("Testing each runner", () => {
   });
 
   test("standard", async() => {
-    const { deps, devDeps, files, scripts } = await linter();
+    await linter();
+    const { deps, devDeps, files, scripts } = projectConfig;
     expect(deps).toStrictEqual([]);
     expect(devDeps).toStrictEqual(["standard", "snazzy", "@release-it/keep-a-changelog"]);
     expect(files).toStrictEqual([{ copy: ".release-it.json" }]);
@@ -91,7 +101,8 @@ describe("Testing each runner", () => {
   });
 
   test("@nodesecure/eslint-config", async() => {
-    const { deps, devDeps, files, scripts } = await linter();
+    await linter();
+    const { deps, devDeps, files, scripts } = projectConfig;
     expect(deps).toStrictEqual([]);
     expect(devDeps).toStrictEqual(["eslint", "@nodesecure/eslint-config"]);
     expect(files).toStrictEqual([{
@@ -111,7 +122,8 @@ describe("Testing each runner", () => {
   });
 
   test("@nodesecure/eslint-config ESM", async() => {
-    const { deps, devDeps, files, scripts } = await linter({ ESM: true });
+    await linter({ ESM: true });
+    const { deps, devDeps, files, scripts } = projectConfig;
     expect(deps).toStrictEqual([]);
     expect(devDeps).toStrictEqual(["eslint", "@nodesecure/eslint-config"]);
     expect(files).toStrictEqual([{

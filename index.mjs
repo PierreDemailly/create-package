@@ -16,7 +16,7 @@ import { select, question, confirm, required } from "@topcli/prompts";
 import { gitAuthor } from "./src/utils.js";
 import { license } from "./src/license.js";
 import { linter } from "./src/linter.js";
-import { Feature } from "./src/feature.js";
+import { projectConfig } from "./src/projectConfig.js";
 import { testing } from "./src/testing.js";
 import { changelog } from "./src/changelog.js";
 import { readme } from "./src/readme.js";
@@ -48,14 +48,16 @@ const module = await select("Is your project ESM or CommonJS ?", {
 const isCLI = await confirm("Is your project a CLI ?", {
   initial: false
 });
-const fLicense = await license();
-const fTesting = await testing();
-const fLinter = await linter({ ESM: module === "module" });
-const fChangelog = changelog();
-const fGitignore = gitignore();
-const fReadme = readme(packageName);
-const fEditorConfig = editorConfig();
-const fNpmrc = await npmrc();
+
+// TODO: autoloader.
+await license();
+await testing();
+await linter({ ESM: module === "module" });
+changelog();
+gitignore();
+readme(packageName);
+editorConfig();
+await npmrc();
 
 const createFilesSpinner = new Spinner({ name: "line" }).start("Create project");
 
@@ -69,8 +71,7 @@ const packageJson = (`\
   "version": "0.0.1",
   "description": "${packageDesc}",
   "scripts": {
-      ${fTesting.extractScripts()}
-      ${fLinter.extractScripts()}
+      ${projectConfig.extractScripts()}
       "pkg:ok": "npx pkg-ok"
   },
   "main": "${isCLI ? `./bin/${mainFile}` : `./${mainFile}`}",${isCLI
@@ -79,19 +80,12 @@ const packageJson = (`\
     : ""}
   "keywords": [],
   "author": "${author}",
-  "license": "${fLicense.license}",
+  "license": "${projectConfig.license}",
   "type": "${module}"
 }`);
 
 await writeFile(join(process.cwd(), packageName, "package.json"), packageJson);
-fTesting.createFiles(packageName);
-fLinter.createFiles(packageName);
-fLicense.createFiles(packageName);
-fChangelog.createFiles(packageName);
-fGitignore.createFiles(packageName);
-fReadme.createFiles(packageName);
-fEditorConfig.createFiles(packageName);
-fNpmrc.createFiles(packageName);
+projectConfig.createFiles(packageName);
 
 if (isCLI) {
   await mkdir(`${packageName}/bin`);
@@ -99,7 +93,7 @@ if (isCLI) {
 const mainFilePath = join(process.cwd(), packageName, isCLI ? "./bin" : "./", mainFile);
 
 let fileContent = "console.log(\"Hello world\")";
-if (!fLinter.devDeps.includes("standard")) {
+if (!projectConfig.devDeps.includes("standard")) {
   fileContent += ";";
 }
 if (isCLI) {
@@ -110,11 +104,11 @@ await writeFile(mainFilePath, fileContent);
 
 createFilesSpinner.succeed(`Project initialized: ./${packageName}`);
 
-const features = Feature.mergeAll();
 const installSpinner = new Spinner({ name: "line" }).start("Installing dependencies");
-const devDeps = [...features.devDeps, "pkg-ok"];
-const deps = [...features.deps];
+const devDeps = [...projectConfig.devDeps, "pkg-ok"];
+const deps = [...projectConfig.deps];
 
+// TODO: spawn / npm
 await execAsync(`cd ${packageName} && npm i -D ${devDeps.join(" ")}`);
 if (deps.length) {
   await execAsync(`cd ${packageName} && npm i ${deps.join(" ")}`);
