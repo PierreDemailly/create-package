@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Added
 
-- Added `.npmrc` feature to skip lockfile, it does by default.
+- Added `.npmrc` config to skip lockfile, it does by default.
 - Added shebang for binary executables.
 - Make linter config to be json instead of yaml
 

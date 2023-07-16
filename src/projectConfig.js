@@ -7,30 +7,12 @@ import { EOL } from "node:os";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const instances = [];
-
-export class Feature {
+class ProjectConfig {
   constructor() {
-    instances.push(this);
     this.deps = [];
     this.devDeps = [];
     this.files = [];
     this.scripts = [];
-  }
-
-  static mergeAll() {
-    return instances.reduce((acc, obj) => {
-      for (const key in obj) {
-        if (acc[key]) {
-          acc[key].push(...obj[key]);
-        }
-        else {
-          acc[key] = [...obj[key]];
-        }
-      }
-
-      return acc;
-    }, {});
   }
 
   createFiles(dir) {
@@ -43,7 +25,7 @@ export class Feature {
         const content = readFileSync(path.resolve(__dirname, `./assets/${file.copy}`));
         writeFileSync(path.join(process.cwd(), dir, file.path ?? file.copy), content);
 
-        return;
+        continue;
       }
 
       writeFileSync(path.join(process.cwd(), dir, file.path), file.content);
@@ -58,3 +40,7 @@ export class Feature {
     return this.scripts.map((script) => `"${script.name}": "${script.value}",`).join(EOL);
   }
 }
+
+const projectConfig = new ProjectConfig();
+
+export { projectConfig };
