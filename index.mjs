@@ -23,6 +23,7 @@ import { readme } from "./src/readme.js";
 import { editorConfig } from "./src/editorConfig.js";
 import { gitignore } from "./src/gitignore.js";
 import { npmrc } from "./src/npmrc.js";
+import { allContributors } from "./src/allcontributors.js";
 
 const execAsync = promisify(exec);
 
@@ -58,6 +59,7 @@ gitignore();
 readme(packageName);
 editorConfig();
 await npmrc();
+await allContributors(packageName);
 
 const createFilesSpinner = new Spinner({ name: "line" }).start("Create project");
 

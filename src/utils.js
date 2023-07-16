@@ -2,6 +2,7 @@
 import { execSync } from "node:child_process";
 import { EOL } from "node:os";
 
+// TODO: node-git
 export function gitAuthor() {
   const author = {
     name: execSync("git config user.name").toString().replace(EOL, ""),
