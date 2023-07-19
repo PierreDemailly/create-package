@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.2.0] - 2023-07-19
+
 ### Added
 
 - Added `all-contributors` support.
