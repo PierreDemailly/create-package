@@ -22,20 +22,20 @@
   "author": "Pierre Demamilly <pierredemailly.pro@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@myunisoft/httpie": "^2.0.0",
-    "@topcli/prompts": "^1.1.0",
-    "@topcli/spinner": "^2.1.1",
+    "@myunisoft/httpie": "^2.0.3",
+    "@topcli/prompts": "^1.3.1",
+    "@topcli/spinner": "^2.1.2",
     "ansi-styles": "^6.2.1",
     "pupa": "^3.1.0",
-    "spdx-license-list": "^6.6.0"
+    "spdx-license-list": "^6.7.0"
   },
   "devDependencies": {
-    "@nodesecure/eslint-config": "^1.7.1",
+    "@nodesecure/eslint-config": "^1.8.0",
     "@release-it/keep-a-changelog": "^4.0.0",
     "@vitest/coverage-c8": "^0.33.0",
-    "eslint": "^8.45.0",
+    "eslint": "^8.50.0",
     "pkg-ok": "^3.0.0",
-    "vitest": "^0.33.0"
+    "vitest": "^0.34.6"
   },
   "files": [
     "index.mjs",
