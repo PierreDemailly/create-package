@@ -12,6 +12,7 @@ import { EOL } from "node:os";
 import { Spinner } from "@topcli/spinner";
 import { select, question, confirm, required } from "@topcli/prompts";
 import { currentAuthor } from "@pierred/node-git";
+import tree from "@topcli/lstree";
 
 // Import Internal Dependencies
 import { license } from "./src/license.js";
@@ -106,6 +107,14 @@ if (isCLI) {
 await writeFile(mainFilePath, fileContent);
 
 createFilesSpinner.succeed(`Project initialized: ./${packageName}`);
+
+const lstree = tree({
+  depth: 2,
+  showFilesDescriptor: true,
+  margin: { bottom: 1, left: 2 },
+  title: `./${packageName}`
+});
+await lstree(join(process.cwd(), packageName));
 
 const installSpinner = new Spinner({ name: "line" }).start("Installing dependencies");
 const devDeps = [...projectConfig.devDeps, "pkg-ok"];
