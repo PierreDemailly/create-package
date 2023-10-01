@@ -1,5 +1,5 @@
 // Import Node.js Dependencies
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { EOL } from "node:os";
@@ -28,6 +28,10 @@ class ProjectConfig {
         continue;
       }
 
+      mkdirSync(path.join(process.cwd(), dir, file.path.split("/").slice(0, -1).join("/")), {
+        recursive: true,
+        force: true
+      });
       writeFileSync(path.join(process.cwd(), dir, file.path), file.content);
     }
   }
