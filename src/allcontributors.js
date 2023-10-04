@@ -7,11 +7,11 @@ import url from "node:url";
 // Import Third-party Dependencies
 import { Headers, request } from "@myunisoft/httpie";
 import pupa from "pupa";
+import { confirm } from "@topcli/prompts";
 
 // Import Internal Dependencies
 import { gitAuthor } from "./utils.js";
 import { projectConfig } from "./projectConfig.js";
-import { confirm } from "@topcli/prompts";
 
 // CONSTANTS
 const kGitHubApiUrl = "https://api.github.com";

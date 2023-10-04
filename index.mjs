@@ -24,6 +24,7 @@ import { editorConfig } from "./src/editorConfig.js";
 import { gitignore } from "./src/gitignore.js";
 import { npmrc } from "./src/npmrc.js";
 import { allContributors } from "./src/allcontributors.js";
+import { githubActions } from "./src/githubActions.js";
 
 const execAsync = promisify(exec);
 
@@ -60,6 +61,7 @@ readme(packageName);
 editorConfig();
 await npmrc();
 await allContributors(packageName);
+await githubActions(projectConfig.scripts.some((script) => script.name === "test"));
 
 const createFilesSpinner = new Spinner({ name: "line" }).start("Create project");
 

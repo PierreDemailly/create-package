@@ -21,7 +21,8 @@ vi.mock("node:fs", () => {
       writeLogs.push(arg, content);
 
       return true;
-    }
+    },
+    mkdirSync: () => void 0
   };
 });
 
