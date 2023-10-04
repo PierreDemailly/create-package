@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Added
+- Added **GitHub Actions** supports: `OSSF Scorecard`, `CodeQL`, `Node.js` and `Dependabot`.
+
+### Fixed
+- Author name & email no longer contains newline
+
 ## [0.2.0] - 2023-07-19
 
 ### Added
