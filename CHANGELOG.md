@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.3.1] - 2023-10-08
+
 ### Fixed
 - currentAuthor.split is not a function error
 

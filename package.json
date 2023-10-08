@@ -1,6 +1,6 @@
 {
   "name": "@pierred/create-package",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Generate Node.js package boilerplate",
   "scripts": {
     "test": "tsx --loader=esmock --test",
