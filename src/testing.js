@@ -2,7 +2,6 @@
 import { confirm, select } from "@topcli/prompts";
 
 // Import Internal Dependencies
-// TODO: rename config.
 import { projectConfig } from "./projectConfig.js";
 
 export async function testing() {
@@ -13,7 +12,6 @@ export async function testing() {
   if (addTestLibrary) {
     const testRunner = await select("Choose your test runner", {
       choices: ["node:test", "tap", "vitest"]
-      // TODO: required
     });
     projectConfig.devDeps.push(...getRunnerDeps(testRunner));
     projectConfig.scripts.push(...getRunnerScripts(testRunner));

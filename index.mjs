@@ -11,9 +11,9 @@ import { EOL } from "node:os";
 // Import Third-party Dependencies
 import { Spinner } from "@topcli/spinner";
 import { select, question, confirm, required } from "@topcli/prompts";
+import { currentAuthor } from "@pierred/node-git";
 
 // Import Internal Dependencies
-import { gitAuthor } from "./src/utils.js";
 import { license } from "./src/license.js";
 import { linter } from "./src/linter.js";
 import { projectConfig } from "./src/projectConfig.js";
@@ -51,7 +51,6 @@ const isCLI = await confirm("Is your project a CLI ?", {
   initial: false
 });
 
-// TODO: autoloader.
 await license();
 await testing();
 await linter({ ESM: module === "module" });
@@ -67,7 +66,7 @@ const createFilesSpinner = new Spinner({ name: "line" }).start("Create project")
 
 await mkdir(packageName);
 
-const author = gitAuthor();
+const author = await currentAuthor();
 const mainFile = isCLI ? `${packageName}.${module === "module" ? "mjs" : "js"}` : "index.js";
 const packageJson = (`\
 {
@@ -112,10 +111,9 @@ const installSpinner = new Spinner({ name: "line" }).start("Installing dependenc
 const devDeps = [...projectConfig.devDeps, "pkg-ok"];
 const deps = [...projectConfig.deps];
 
-// TODO: spawn / npm
-await execAsync(`cd ${packageName} && npm i -D ${devDeps.join(" ")}`);
+await execAsync(`cd ${packageName} && npm i -D ${devDeps.join(" ")}`, { stdio: [0, 1, 2] });
 if (deps.length) {
-  await execAsync(`cd ${packageName} && npm i ${deps.join(" ")}`);
+  await execAsync(`cd ${packageName} && npm i ${deps.join(" ")}`, { stdio: [0, 1, 2] });
 }
 installSpinner.succeed("Dependencies installed");
 
