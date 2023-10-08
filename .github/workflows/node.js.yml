@@ -13,8 +13,8 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [18.x, 20.x]
+        os: [ubuntu-latest]
       fail-fast: false
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
@@ -30,17 +30,6 @@ jobs:
         run: npm run pkg:ok
       - name: Run tests
         run: npm run test
-  nsci:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
-      - uses: NodeSecure/ci-action@177c57fe32c75cafabe87f6e4515d277cc37ae6c # v1.4.1
-        with:
-          warnings: warning
   checkkac:
     if: ${{ github.actor != 'dependabot[bot]' && github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest

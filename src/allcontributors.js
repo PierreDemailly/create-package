@@ -8,9 +8,9 @@ import url from "node:url";
 import { Headers, request } from "@myunisoft/httpie";
 import pupa from "pupa";
 import { confirm } from "@topcli/prompts";
+import { currentAuthor } from "@pierred/node-git";
 
 // Import Internal Dependencies
-import { gitAuthor } from "./utils.js";
 import { projectConfig } from "./projectConfig.js";
 
 // CONSTANTS
@@ -30,7 +30,7 @@ export async function allContributors(projectName) {
     return;
   }
 
-  const user = gitAuthor().split(" ")[0];
+  const user = await currentAuthor().split("<")[0];
 
   const requestUrl = new URL(`/users/${user}`, kGitHubApiUrl);
   const { data } = await request("GET", requestUrl, kRequestOptions);

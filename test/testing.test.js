@@ -1,62 +1,58 @@
+// Import Node.js Dependencies
+import { describe, it, beforeEach } from "node:test";
+import assert from "node:assert";
+
 // Import Third-party Dependencies
-import { vi, describe, expect, test, beforeEach } from "vitest";
+import { PromptAgent } from "@topcli/prompts";
 
 // Import Internal Dependencies
 import { testing } from "../src/testing.js";
 import { resetProjectConfig } from "./helpers.ts";
 import { projectConfig } from "../src/projectConfig.js";
 
-function* mockPromptsValues() {
-  yield true;
-  yield "node:test";
-  yield true;
-  yield "vitest";
-  yield true;
-  yield "tap";
-}
-
-const mockPromptsValues$ = mockPromptsValues();
-
-vi.mock("@topcli/prompts", () => {
-  return {
-    select: async() => mockPromptsValues$.next().value,
-    confirm: async() => mockPromptsValues$.next().value
-  };
-});
+// CONSTANTS
+const kPromptAgent = PromptAgent.agent();
 
 describe("Test Runners", () => {
   beforeEach(() => {
     resetProjectConfig();
   });
 
-  test("node:test", async() => {
+  it("node:test", async() => {
+    kPromptAgent.nextAnswer(true);
+    kPromptAgent.nextAnswer("node:test");
     await testing();
     const { scripts, devDeps } = projectConfig;
 
-    expect(scripts).toStrictEqual([
+    assert.deepStrictEqual(scripts, [
       { name: "test", value: "node --test ./test/**.test.js" }
     ]);
-    expect(devDeps).toStrictEqual([]);
+    assert.deepStrictEqual(devDeps, []);
   });
 
-  test("vitest", async() => {
+  it("vitest", async() => {
+    kPromptAgent.nextAnswer(true);
+    kPromptAgent.nextAnswer("vitest");
     await testing();
     const { scripts, devDeps } = projectConfig;
-    expect(scripts).toStrictEqual([
+
+    assert.deepStrictEqual(scripts, [
       { name: "test", value: "vitest run" },
       { name: "test:c8", value: "vitest run --coverage" }
     ]);
-    expect(devDeps).toStrictEqual(["vitest", "@vitest/coverage-c8"]);
+    assert.deepStrictEqual(devDeps, ["vitest", "@vitest/coverage-c8"]);
   });
 
-  test("tap", async() => {
+  it("tap", async() => {
+    kPromptAgent.nextAnswer(true);
+    kPromptAgent.nextAnswer("tap");
     await testing();
     const { scripts, devDeps } = projectConfig;
 
-    expect(scripts).toStrictEqual([
+    assert.deepStrictEqual(scripts, [
       { name: "test", value: "tap --no-coverage ./test/**.test.js" },
       { name: "test:c8", value: "tap ./test/**.test.js" }
     ]);
-    expect(devDeps).toStrictEqual(["tap"]);
+    assert.deepStrictEqual(devDeps, ["tap"]);
   });
 });
