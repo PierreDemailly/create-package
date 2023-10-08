@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.3.0] - 2023-10-08
+
 ### Added
 - Added **GitHub Actions** supports: `OSSF Scorecard`, `CodeQL`, `Node.js` and `Dependabot`.
 
