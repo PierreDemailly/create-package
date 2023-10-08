@@ -1,43 +1,48 @@
 // Import Node.js Dependencies
 import { EOL } from "node:os";
+import { describe, it, before } from "node:test";
+import assert from "node:assert";
 
 // Import Third-party Dependencies
-import { vi, expect, test } from "vitest";
+import esmock from "esmock";
 
-// Import Internal Dependencies
-import { projectConfig } from "../src/projectConfig.js";
-
-const writeLogs = [];
-
+// CONSTANTS
+const kFsWriteFileSyncLogs = [];
 const kMockContentFile = "# cc";
 
-vi.mock("node:fs", () => {
-  const actual = vi.importActual("node:fs");
+describe("projectConfig", () => {
+  let projectConfig;
 
-  return {
-    ...actual,
-    readFileSync: () => kMockContentFile,
-    writeFileSync: (arg, content) => {
-      writeLogs.push(arg, content);
+  before(async() => {
+    const module = await esmock("../src/projectConfig.js", {
+      "node:fs": {
+        readFileSync: () => kMockContentFile,
+        writeFileSync: (arg, content) => {
+          kFsWriteFileSyncLogs.push(arg, content);
 
-      return true;
-    },
-    mkdirSync: () => void 0
-  };
+          return true;
+        },
+        mkdirSync: () => void 0
+      }
+    });
+
+    projectConfig = module.projectConfig;
+  });
+
+  it("extractScripts", () => {
+    projectConfig.scripts.push({ name: "aaa", value: "bbb" }, { name: "ccc", value: "ddd" });
+    const scripts = projectConfig.extractScripts();
+    assert.equal(scripts, `"aaa": "bbb",${EOL}"ccc": "ddd",`);
+  });
+
+  it("createFiles", () => {
+    projectConfig.files.push(
+      { copy: "test.md" },
+      { path: "test.xd", content: "its mocked anyway" }
+    );
+    projectConfig.createFiles("dir");
+    assert.equal([...kFsWriteFileSyncLogs[0]].join("").slice(kFsWriteFileSyncLogs[0].length - 7), "test.md");
+    assert.equal(kFsWriteFileSyncLogs[1], kMockContentFile);
+  });
 });
 
-test("extractScripts", () => {
-  projectConfig.scripts.push({ name: "aaa", value: "bbb" }, { name: "ccc", value: "ddd" });
-  const scripts = projectConfig.extractScripts();
-  expect(scripts).toStrictEqual(`"aaa": "bbb",${EOL}"ccc": "ddd",`);
-});
-
-test("createFiles", () => {
-  projectConfig.files.push(
-    { copy: "test.md" },
-    { path: "test.xd", content: "its mocked anyway" }
-  );
-  projectConfig.createFiles("dir");
-  expect([...writeLogs[0]].join("").slice(writeLogs[0].length - 7)).toStrictEqual("test.md");
-  expect(writeLogs[1]).toStrictEqual(kMockContentFile);
-});
