@@ -30,7 +30,7 @@ export async function allContributors(projectName) {
     return;
   }
 
-  const user = await currentAuthor().split("<")[0];
+  const user = (await currentAuthor()).split("<")[0];
 
   const requestUrl = new URL(`/users/${user}`, kGitHubApiUrl);
   const { data } = await request("GET", requestUrl, kRequestOptions);
