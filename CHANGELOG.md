@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Removed lockfile
 - Cleaned up TODOs
-- 
+- Migrated tests from `vitest` to `test_runner`
 
 ## [0.2.0] - 2023-07-19
 
