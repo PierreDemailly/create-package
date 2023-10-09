@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Added
+
+- Display folder structure after initialization
+
 ## [0.3.1] - 2023-10-08
 
 ### Fixed
