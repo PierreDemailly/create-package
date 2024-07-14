@@ -6,9 +6,9 @@ import url from "node:url";
 
 // Import Third-party Dependencies
 import { Headers, request } from "@myunisoft/httpie";
-import pupa from "pupa";
 import { confirm } from "@topcli/prompts";
 import { currentAuthor } from "@pierred/node-git";
+import { morphix } from "@sigyn/morphix";
 
 // Import Internal Dependencies
 import { projectConfig } from "./projectConfig.js";
@@ -37,7 +37,7 @@ export async function allContributors(projectName) {
 
   const { login, avatar_url, name } = data;
   const template = fs.readFileSync(path.resolve(__dirname, "./assets/.all-contributorsrc"), "utf-8");
-  const content = pupa(template, { login, avatar_url, name: name ?? login, projectName });
+  const content = await morphix(template, { login, avatar_url, name: name ?? login, projectName });
 
   projectConfig.files.push({
     path: ".all-contributorsrc",
@@ -45,7 +45,7 @@ export async function allContributors(projectName) {
   });
 
   const readmeTemplate = fs.readFileSync(path.resolve(__dirname, "./assets/all-contributors-readme"), "utf-8");
-  const readmeContent = pupa(readmeTemplate, { login, avatar_url, name: name ?? login, projectName });
+  const readmeContent = await morphix(readmeTemplate, { login, avatar_url, name: name ?? login, projectName });
 
   const configFilesReadmeIndex = projectConfig.files.findIndex((file) => file.path === "README.md");
   projectConfig.files[configFilesReadmeIndex].content += `${EOL}${EOL}${readmeContent}`;

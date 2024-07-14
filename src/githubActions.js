@@ -5,7 +5,7 @@ import { EOL } from "node:os";
 import url from "node:url";
 
 // Import Third-party Dependencies
-import pupa from "pupa";
+import { morphix } from "@sigyn/morphix";
 import { multiselect, required } from "@topcli/prompts";
 
 // Import Internal Dependencies
@@ -46,7 +46,9 @@ const kTestingGithubActions = {
         validators: [required()]
       });
 
-      return pupa(source, {
+      console.log("nodeVersions.join(", ")", nodeVersions.join(", "));
+
+      return await morphix(source, {
         os: os.join(", "),
         nodeVersions: nodeVersions.join(", ")
       }, {

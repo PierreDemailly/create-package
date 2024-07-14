@@ -28,7 +28,7 @@
     "@topcli/prompts": "^1.5.0",
     "@topcli/spinner": "^2.1.2",
     "ansi-styles": "^6.2.1",
-    "pupa": "^3.1.0",
+    "@sigyn/morphix": "^1.1.0",
     "spdx-license-list": "^6.7.0"
   },
   "devDependencies": {
