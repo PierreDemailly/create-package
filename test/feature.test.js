@@ -1,38 +1,35 @@
 // Import Node.js Dependencies
 import { EOL } from "node:os";
-import { describe, it, before } from "node:test";
+import { describe, it, before, after, mock } from "node:test";
 import assert from "node:assert";
+import fs from "node:fs";
 
-// Import Third-party Dependencies
-import esmock from "esmock";
+// Import Internal Dependencies
+import { projectConfig } from "../src/projectConfig.js";
 
 // CONSTANTS
 const kFsWriteFileSyncLogs = [];
 const kMockContentFile = "# cc";
 
 describe("projectConfig", () => {
-  let projectConfig;
-
   before(async() => {
-    const module = await esmock("../src/projectConfig.js", {
-      "node:fs": {
-        readFileSync: () => kMockContentFile,
-        writeFileSync: (arg, content) => {
-          kFsWriteFileSyncLogs.push(arg, content);
+    mock.method(fs, "readFileSync", () => kMockContentFile);
+    mock.method(fs, "writeFileSync", (arg, content) => {
+      kFsWriteFileSyncLogs.push(arg, content);
 
-          return true;
-        },
-        mkdirSync: () => void 0
-      }
+      return true;
     });
+    mock.method(fs, "mkdirSync", () => void 0);
+  });
 
-    projectConfig = module.projectConfig;
+  after(() => {
+    mock.restoreAll();
   });
 
   it("extractScripts", () => {
     projectConfig.scripts.push({ name: "aaa", value: "bbb" }, { name: "ccc", value: "ddd" });
     const scripts = projectConfig.extractScripts();
-    assert.equal(scripts, `"aaa": "bbb",${EOL}"ccc": "ddd",`);
+    assert.equal(scripts, `"aaa": "bbb",${EOL}"ccc": "ddd"`);
   });
 
   it("createFiles", () => {

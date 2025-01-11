@@ -1,7 +1,6 @@
 // Import Node.js Dependencies
 import fs from "node:fs";
 import path from "node:path";
-import { EOL } from "node:os";
 import url from "node:url";
 
 // Import Third-party Dependencies
@@ -41,8 +40,8 @@ const kTestingGithubActions = {
       });
 
       const nodeVersions = await multiselect("Choose Node.js CI versions", {
-        choices: ["18", "20"],
-        preSelectedChoices: ["18"],
+        choices: ["20", "22"],
+        preSelectedChoices: ["22"],
         validators: [required()]
       });
 
@@ -52,7 +51,7 @@ const kTestingGithubActions = {
         os: os.join(", "),
         nodeVersions: nodeVersions.join(", ")
       }, {
-        // ignore ${{matrix.os}} & ${{matrix.node-version}}}
+        // ignore ${{matrix.os}} & ${{matrix.node-version}}
         ignoreMissing: true
       });
     }
