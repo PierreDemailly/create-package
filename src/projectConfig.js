@@ -1,5 +1,5 @@
 // Import Node.js Dependencies
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { EOL } from "node:os";
@@ -22,17 +22,17 @@ class ProjectConfig {
 
     for (const file of this.files) {
       if (file.copy) {
-        const content = readFileSync(path.resolve(__dirname, `./assets/${file.copy}`));
-        writeFileSync(path.join(process.cwd(), dir, file.path ?? file.copy), content);
+        const content = fs.readFileSync(path.resolve(__dirname, `./assets/${file.copy}`));
+        fs.writeFileSync(path.join(process.cwd(), dir, file.path ?? file.copy), content);
 
         continue;
       }
 
-      mkdirSync(path.join(process.cwd(), dir, file.path.split("/").slice(0, -1).join("/")), {
+      fs.mkdirSync(path.join(process.cwd(), dir, file.path.split("/").slice(0, -1).join("/")), {
         recursive: true,
         force: true
       });
-      writeFileSync(path.join(process.cwd(), dir, file.path), file.content);
+      fs.writeFileSync(path.join(process.cwd(), dir, file.path), file.content);
     }
   }
 
@@ -41,7 +41,7 @@ class ProjectConfig {
       return EOL;
     }
 
-    return this.scripts.map((script) => `"${script.name}": "${script.value}",`).join(EOL);
+    return this.scripts.map((script) => `"${script.name}": "${script.value}"`).join(`,${EOL}`);
   }
 }
 

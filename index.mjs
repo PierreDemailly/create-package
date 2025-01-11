@@ -16,9 +16,7 @@ import tree from "@topcli/lstree";
 
 // Import Internal Dependencies
 import { license } from "./src/license.js";
-import { linter } from "./src/linter.js";
 import { projectConfig } from "./src/projectConfig.js";
-import { testing } from "./src/testing.js";
 import { changelog } from "./src/changelog.js";
 import { readme } from "./src/readme.js";
 import { editorConfig } from "./src/editorConfig.js";
@@ -53,8 +51,33 @@ const isCLI = await confirm("Is your project a CLI ?", {
 });
 
 await license();
-await testing();
-await linter({ ESM: module === "module" });
+const setupUnitTests = await confirm("Setup unit tests?", {
+  initial: true
+});
+
+if (setupUnitTests) {
+  projectConfig.scripts.push({ name: "test", value: "node --test" });
+}
+
+const eslintRawConfig = `
+import { ESLintConfig } from "@openally/config.eslint";
+
+export default [
+  ...ESLintConfig,
+  {
+    languageOptions: {
+      sourceType: ${module === "module" ? "module" : "script"}
+    }
+  }
+];
+`;
+const lintScript = setupUnitTests ? "eslint src test" : "eslint src";
+projectConfig.scripts.push({ name: "lint", value: lintScript });
+projectConfig.devDeps.push("@openally/config.eslint");
+projectConfig.files.push({
+  path: "eslint.config.mjs",
+  content: eslintRawConfig
+});
 changelog();
 gitignore();
 readme(packageName);
@@ -76,7 +99,6 @@ const packageJson = (`\
   "description": "${packageDesc}",
   "scripts": {
       ${projectConfig.extractScripts()}
-      "pkg:ok": "npx pkg-ok"
   },
   "main": "${isCLI ? `./bin/${mainFile}` : `./${mainFile}`}",${isCLI
     ? `\n\t"bin": {
