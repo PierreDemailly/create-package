@@ -32,20 +32,21 @@ const kTestingGithubActions = {
     label: "Node.js CI",
     description: "Run unit tests",
     folder: "workflows",
-    transform: async(source) => {
+    transform: async(source, options = {}) => {
+      const { yes = false } = options;
       const os = await multiselect("Choose Node.js CI OS", {
         choices: ["ubuntu-latest", "macos-latest", "windows-latest"],
         preSelectedChoices: ["ubuntu-latest"],
-        validators: [required()]
+        validators: [required()],
+        skip: yes
       });
 
       const nodeVersions = await multiselect("Choose Node.js CI versions", {
         choices: ["20", "22"],
         preSelectedChoices: ["22"],
-        validators: [required()]
+        validators: [required()],
+        skip: yes
       });
-
-      console.log("nodeVersions.join(", ")", nodeVersions.join(", "));
 
       return await morphix(source, {
         os: os.join(", "),
@@ -60,13 +61,15 @@ const kTestingGithubActions = {
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
-export async function githubActions(testing) {
+export async function githubActions(options = {}) {
+  const { yes = false, setupUnitTests = false } = options;
   const githubActions = { ...kGitHubActions };
-  if (testing) {
+  if (setupUnitTests) {
     Object.assign(githubActions, kTestingGithubActions);
   }
 
-  const choices = await multiselect("Choose GitHub Actions", {
+  const defaultActions = Object.keys(githubActions).filter((gha) => gha !== "scorecard");
+  const choices = yes ? defaultActions : await multiselect("Choose GitHub Actions", {
     choices: Object.entries(githubActions).map(([key, value]) => {
       return {
         value: key,
@@ -79,7 +82,7 @@ export async function githubActions(testing) {
     const file = fs.readFileSync(path.join(__dirname, `./assets/github/${choice}.yml`), "utf-8");
     const { folder, transform } = githubActions[choice];
     const outputPath = folder ? `${folder}/${choice}.yml` : `${choice}.yml`;
-    const content = transform ? await transform(file) : file;
+    const content = transform ? await transform(file, { yes }) : file;
 
     projectConfig.files.push({
       path: `.github/${outputPath}`,

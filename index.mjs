@@ -5,7 +5,7 @@ import { existsSync } from "node:fs";
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { exec } from "node:child_process";
-import { promisify } from "node:util";
+import { promisify, parseArgs } from "node:util";
 import { EOL } from "node:os";
 
 // Import Third-party Dependencies
@@ -26,14 +26,26 @@ import { allContributors } from "./src/allcontributors.js";
 import { githubActions } from "./src/githubActions.js";
 
 const execAsync = promisify(exec);
-
-const packageNameArg = process.argv[2];
-if (packageNameArg) {
-  if (existsSync(join(process.cwd(), packageNameArg))) {
-    throw new Error(`Folder ${packageNameArg} already exists`);
+const cliOptions = {
+  yes: {
+    type: "boolean",
+    short: "y",
+    default: false
+  }
+};
+const {
+  values: { yes },
+  positionals: [givenPackageName]
+} = parseArgs({ options: cliOptions, allowPositionals: true });
+if (yes && !givenPackageName) {
+  throw new Error("You must provide a package name when using the --yes flag");
+}
+if (givenPackageName) {
+  if (existsSync(join(process.cwd(), givenPackageName))) {
+    throw new Error(`Folder ${givenPackageName} already exists`);
   }
 }
-const packageName = packageNameArg ?? await question("Package name", {
+const packageName = givenPackageName ?? await question("Package name", {
   validators: [
     required(),
     {
@@ -42,17 +54,20 @@ const packageName = packageNameArg ?? await question("Package name", {
     }
   ]
 });
-const packageDesc = await question("Package description");
+const packageDesc = await question("Package description", { skip: yes });
 const module = await select("Is your project ESM or CommonJS ?", {
-  choices: ["module", "commonjs"]
+  choices: ["module", "commonjs"],
+  skip: yes
 });
 const isCLI = await confirm("Is your project a CLI ?", {
-  initial: false
+  initial: false,
+  skip: yes
 });
 
 await license();
 const setupUnitTests = await confirm("Setup unit tests?", {
-  initial: true
+  initial: true,
+  skip: yes
 });
 
 if (setupUnitTests) {
@@ -82,9 +97,9 @@ changelog();
 gitignore();
 readme(packageName);
 editorConfig();
-await npmrc();
-await allContributors(packageName);
-await githubActions(projectConfig.scripts.some((script) => script.name === "test"));
+await npmrc({ yes });
+await allContributors(packageName, { yes });
+await githubActions({ yes, setupUnitTests });
 
 const createFilesSpinner = new Spinner({ name: "line" }).start("Create project");
 

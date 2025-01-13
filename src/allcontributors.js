@@ -23,8 +23,12 @@ const kRequestOptions = {
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
-export async function allContributors(projectName) {
-  const initAllContributors = await confirm("Init all-contributors ?", { initial: true });
+export async function allContributors(projectName, options = {}) {
+  const { yes = false } = options;
+  const initAllContributors = await confirm("Init all-contributors ?", {
+    initial: false,
+    skip: yes
+  });
 
   if (!initAllContributors) {
     return;
