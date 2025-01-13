@@ -154,7 +154,7 @@ const lstree = tree({
 await lstree(join(process.cwd(), packageName));
 
 const installSpinner = new Spinner({ name: "line" }).start("Installing dependencies");
-const devDeps = [...projectConfig.devDeps, "pkg-ok"];
+const devDeps = [...projectConfig.devDeps];
 const deps = [...projectConfig.deps];
 
 await execAsync(`cd ${packageName} && npm i -D ${devDeps.join(" ")}`, { stdio: [0, 1, 2] });
