@@ -17,7 +17,6 @@ import tree from "@topcli/lstree";
 // Import Internal Dependencies
 import { license } from "./src/license.js";
 import { projectConfig } from "./src/projectConfig.js";
-import { changelog } from "./src/changelog.js";
 import { readme } from "./src/readme.js";
 import { editorConfig } from "./src/editorConfig.js";
 import { gitignore } from "./src/gitignore.js";
@@ -93,7 +92,6 @@ projectConfig.files.push({
   path: "eslint.config.mjs",
   content: eslintRawConfig
 });
-changelog();
 gitignore();
 readme(packageName);
 editorConfig();
