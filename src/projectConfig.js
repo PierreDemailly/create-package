@@ -1,10 +1,10 @@
 // Import Node.js Dependencies
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { EOL } from "node:os";
+import url from "node:url";
+import os from "node:os";
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 class ProjectConfig {
@@ -38,10 +38,10 @@ class ProjectConfig {
 
   extractScripts() {
     if (!this.scripts.length) {
-      return EOL;
+      return os.EOL;
     }
 
-    return this.scripts.map((script) => `"${script.name}": "${script.value}"`).join(`,${EOL}`);
+    return this.scripts.map((script) => `"${script.name}": "${script.value}"`).join(`,${os.EOL}`);
   }
 }
 
