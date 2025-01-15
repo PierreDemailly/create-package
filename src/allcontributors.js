@@ -1,7 +1,7 @@
 // Import Node.js Dependencies
 import fs from "node:fs";
 import path from "node:path";
-import { EOL } from "node:os";
+import os from "node:os";
 import url from "node:url";
 
 // Import Third-party Dependencies
@@ -52,5 +52,5 @@ export async function allContributors(projectName, options = {}) {
   const readmeContent = await morphix(readmeTemplate, { login, avatar_url, name: name ?? login, projectName });
 
   const configFilesReadmeIndex = projectConfig.files.findIndex((file) => file.path === "README.md");
-  projectConfig.files[configFilesReadmeIndex].content += `${EOL}${EOL}${readmeContent}`;
+  projectConfig.files[configFilesReadmeIndex].content += `${os.EOL}${os.EOL}${readmeContent}`;
 }
