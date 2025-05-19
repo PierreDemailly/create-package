@@ -24,7 +24,7 @@
     "@sigyn/morphix": "^1.1.0",
     "@topcli/lstree": "^1.1.0",
     "@topcli/prompts": "^2.1.0",
-    "@topcli/spinner": "^2.1.2",
+    "@topcli/spinner": "^3.0.0",
     "node-ga-updater": "^1.2.3"
   },
   "devDependencies": {
